@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import Search from "./components/Search.jsx";
+import CurrentWeather from './components/CurrentWeather';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Example static weather data
+  const [weatherData, setWeatherData] = useState({
+    city: 'London',
+    temperature: 20, // in °C
+    humidity: 65,    // in %
+    weatherId: 800,  // e.g., clear weather
+  });
+
+  // This function will eventually trigger an API call based on user input.
+  // For now, it just updates the city name.
+  const handleSearch = (city) => {
+    setWeatherData({
+      ...weatherData,
+      city: city,
+      // Later, update temperature, humidity, weatherId based on fetched data
+    });
+  };
+
+  // Basic inline styles for layout
+  const appStyles = {
+    fontFamily: 'Raleway, sans-serif',
+    textAlign: 'center',
+    padding: '20px',
+    backgroundColor: '#f0f0f0',
+    minHeight: '100vh',
+  };
+
+  const headerStyles = {
+    backgroundColor: '#4a90e2',
+    color: '#fff',
+    padding: '20px',
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={appStyles}>
+      <header style={headerStyles}>
+        <h1>Weather App</h1>
+      </header>
+      <main>
+        <Search onSearch={handleSearch} />
+        <CurrentWeather data={weatherData} />
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
