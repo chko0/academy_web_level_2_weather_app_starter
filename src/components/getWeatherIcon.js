@@ -20,3 +20,4 @@ export default function getWeatherIcon(id) {
     
     return iconPath;
 }
+

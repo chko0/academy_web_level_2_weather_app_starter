@@ -1,8 +1,9 @@
 
-import './App.css'
 import CurrentWeather from './components/CurrentWeather'
 import UpcomingWeather from './components/UpcomingWeather'
+import convertToCelsius from './components/convertToCelsius'
 import FakeWeather from "./data/FakeWeather.json";
+
 
 function App() {
   var jsonMain = FakeWeather.list[0].main;
@@ -16,8 +17,8 @@ function App() {
       <CurrentWeather
         id={jsonWeather.id}
         desc={jsonWeather.description}
-        minTemp={jsonMain.temp_min}
-        maxTemp={jsonMain.temp_max}
+        minTemp={convertToCelsius(jsonMain.temp_min)}
+        maxTemp={convertToCelsius(jsonMain.temp_max)}
         humidity={jsonMain.humidity}
         pressure={jsonMain.pressure}
       />
