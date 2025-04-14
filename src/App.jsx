@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 import CurrentWeather from './components/CurrentWeather'
 import UpcomingWeather from './components/UpcomingWeather'
@@ -14,7 +12,7 @@ function App() {
   );
 
   return (
-    <body class="bg-blue-300">
+    <body className="bg-blue-300">
       <CurrentWeather
         id={jsonWeather.id}
         desc={jsonWeather.description}

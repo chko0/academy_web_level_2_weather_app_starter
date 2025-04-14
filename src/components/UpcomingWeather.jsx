@@ -1,7 +1,7 @@
 import Upcomings from "./Upcomings";
 
 export default function UpcomingWeather() {
-    return <div class="flex pt-24 space-x-10">
+    return <div className="flex pt-24 space-x-10">
         <Upcomings time={"03:00"} temperature={"8"} id={"800"}/>
         <Upcomings time="06:00" temperature="9" id={802}/>
         <Upcomings time="09:00" temperature="14" />
