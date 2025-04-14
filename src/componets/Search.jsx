@@ -6,7 +6,7 @@ function Search() {
   return (
     <div className='flex flex-row    bg-[#759eda] p-4'>
     <div className=" flex  items-center w-40 ">
-      <input className="focus:outline-none ml-5 p-2 text-[#ccdbf1] cursor-text "
+      <input className="focus:outline-none ml-5 p-2 text-[#ccdbf1] cursor-pointer"
         type="text"
         placeholder="Type a city name..."
         value={search}
