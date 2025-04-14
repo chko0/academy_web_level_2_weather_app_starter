@@ -1,58 +1,27 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-const Search = ({ onSearch }) => {
-  const [searchInput, setSearchInput] = useState('');
+import  { useState } from 'react';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (searchInput.trim() !== '') {
-      onSearch(searchInput.trim());
-    }
-  };
-
-  // Inline styles for the search form
-  const formStyles = {
-    margin: '20px auto',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
-
-  const inputStyles = {
-    padding: '8px',
-    fontSize: '16px',
-    border: '2px solid #ddd',
-    borderRadius: '4px',
-    width: '200px',
-  };
-
-  const buttonStyles = {
-    padding: '8px 12px',
-    marginLeft: '8px',
-    backgroundColor: '#4a90e2',
-    border: 'none',
-    color: '#fff',
-    fontSize: '16px',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  };
+function Search() {
+  const [search, setSearch] = useState('');
 
   return (
-    <form onSubmit={handleSubmit} style={formStyles}>
-      <input
+    <div className='flex flex-row    bg-[#759eda] p-4'>
+    <div className=" flex  items-center w-40 ">
+      <input className="focus:outline-none ml-5 p-2 text-[#ccdbf1] cursor-text "
         type="text"
-        placeholder="Enter city name..."
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
-        style={inputStyles}
+        placeholder="Type a city name..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
       />
-      <button type="submit" style={buttonStyles}>Search</button>
-    </form>
+    </div>
+    <div className="text-center flex items-center justify-center w-md">
+      <button className="bg-[#5879c7] text-[#0a0d53] p-2  focus:outline-none cursor-pointer">
+        Find Weather
+      </button>
+      </div>
+    </div>
+
   );
-};
-Search.propTypes = {
-  onSearch: PropTypes.func.isRequired,
-};
+}
 
 export default Search;
 
