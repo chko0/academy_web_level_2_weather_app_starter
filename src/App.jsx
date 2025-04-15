@@ -1,19 +1,19 @@
-
+// App.js
 import CurrentWeather from './components/CurrentWeather'
 import UpcomingWeather from './components/UpcomingWeather'
 import convertToCelsius from './components/convertToCelsius'
+import Search from "./componets/Search";  
 import FakeWeather from "./data/FakeWeather.json";
 
-
 function App() {
-  var jsonMain = FakeWeather.list[0].main;
-  var jsonWeather = FakeWeather.list[0].weather[0];
-  console.log(jsonWeather
-
-  );
+  const jsonMain = FakeWeather.list[0].main;
+  const jsonWeather = FakeWeather.list[0].weather[0];
 
   return (
-    <body className="bg-blue-300">
+    <div className=" bg-blue-300 min-h-screen">
+      <header className="flex flex-row bg-[#759eda] p-4">
+      <Search />
+      </header>
       <CurrentWeather
         id={jsonWeather.id}
         desc={jsonWeather.description}
@@ -23,7 +23,9 @@ function App() {
         pressure={jsonMain.pressure}
       />
       <UpcomingWeather />
-    </body>
-  )
+    </div>
+  );
 }
+
+
 export default App;

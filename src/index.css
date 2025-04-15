@@ -1,8 +1,29 @@
 @import "tailwindcss";
 
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
+/* Reset and base styles */
+body, html {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  margin-right: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #5879c7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+  
