@@ -8,19 +8,18 @@ const URL = `https://api.openweathermap.org/data/2.5/forecast`;
 // }
 
 
-export async function fetchCurrentWeather(city, setWeatherData) {
+export async function fetchCurrentWeather(city, setWeatherData, setErrorMessage) {
   try {
     const res = await fetch(`${URL}?q=${city}&appid=${API_KEY}`);
-    console.log(`${URL}?q=${city}&appid=${API_KEY}`);
-    // if (!res.ok) {
-    //   throw new Error('Weather data not found or API error');
-    // }
+    if (!res.ok) {
+       throw new Error('Weather data not found or API error');
+    }
     const data = await res.json();
     console.log(data);
     setWeatherData(data);
   } catch (error) {
     console.error('Error fetching weather data:', error);
     setWeatherData(null);
-    throw error;
+    setErrorMessage(error);
   }
 }

@@ -1,7 +1,7 @@
 import Upcomings from "./Upcomings";
 import convertToCelsius from "./convertToCelsius";
 
-export default function UpcomingWeather({weatherData}) {
+export default function Forecast({weatherData}) {
     var weatherInfo = weatherData.list;
     
     const limitedWeatherInfo = weatherInfo.slice(0, 7);

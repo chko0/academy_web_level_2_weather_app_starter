@@ -42,4 +42,17 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+
+.bg-weather-clear {
+  background-color: #2690F0;
+}
+
+.bg-weather-clouds {
+  background-color: #9CCEF4;
+}
+
+.bg-weather-rain {
+  background-color: #A2B9BF;
+}
   

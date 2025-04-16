@@ -4,14 +4,13 @@ import { fetchCurrentWeather } from '../components/fetchWeather';
 
 //import PropTypes from 'prop-types';
 
-export default function Search({setWeatherData}) {
+export default function Search({setWeatherData, setErrorMessage}) {
   const [query, setQuery] = useState("");
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
-
   useEffect(() => {
     if (query != "")
-      fetchCurrentWeather(query, setWeatherData);
+      fetchCurrentWeather(query, setWeatherData, setErrorMessage);
       setSearchButtonClicked(false);
   }, [searchButtonClicked]);
 
