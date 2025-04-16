@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
-/* Reset and base styles */
 body, html {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
+  background-color: #93c5fd;
 }
 
 input {
@@ -25,5 +25,96 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
-  
+
+button:hover {
+  background-color: #4a68b5;
+}
+
+@media (max-width: 768px) {
+  .upcoming-wrapper {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .upcoming-card {
+    width: 100px;
+    height: 100px;
+    padding: 0.5rem;
+  }
+
+  .current-weather-text {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .weather-icon img {
+    width: 60px;
+    height: auto;
+  }
+
+  .search-input,
+  .search-button {
+    width: 100%;
+    margin: 0.25rem 0;
+    font-size: 1rem;
+  }
+
+  .text-xl {
+    font-size: 1.1rem;
+  }
+
+  .text-2xl {
+    font-size: 1.3rem;
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .upcoming-card {
+    width: 80px;
+    height: 80px;
+    padding: 0.4rem;
+  }
+
+  .weather-icon img {
+    width: 50px;
+    height: auto;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
+  }
+
+  .search-button {
+    font-size: 0.9rem;
+  }
+
+  .text-xl {
+    font-size: 1rem;
+  }
+
+  .text-2xl {
+    font-size: 1.15rem;
+  }
+
+  .text-3xl {
+    font-size: 1.25rem;
+  }
+
+  .current-weather-text {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+
+  .toggle-unit-button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
