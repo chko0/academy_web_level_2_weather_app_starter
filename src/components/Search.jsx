@@ -8,6 +8,7 @@ export default function Search({ onSearch = () => {} }) {
   const handleClick = () => {
     if (search.trim() === '') return;
     onSearch(search);
+    setSearch('');
   };
 
   const handleKeyDown = (event) => {
@@ -17,10 +18,10 @@ export default function Search({ onSearch = () => {} }) {
   };
 
   return (
-    <header className="flex flex-row bg-[#759eda] p-4">
-      <div className="flex items-center w-40">
+    <header className="flex flex-row bg-[#759eda] p-4 gap-2 sm:gap-0">
+      <div className="flex items-center w-40 ">
         <input
-          className="focus:outline-none ml-5 p-2 text-[#ccdbf1] cursor-text"
+          className="focus:outline-none ml-5 p-2 text-[#ccdbf1] cursor-text  search-input"
           type="text"
           placeholder="Type a city name..."
           value={search}
@@ -30,7 +31,7 @@ export default function Search({ onSearch = () => {} }) {
       </div>
       <div className="text-center flex items-center justify-center w-md">
         <button
-          className="bg-[#5879c7] text-[#0a0d53] p-2 focus:outline-none cursor-pointer"
+          className="bg-[#5879c7] text-[#0a0d53] p-2 focus:outline-none cursor-pointer  search-button"
           type="button"
           onClick={handleClick}
         >
