@@ -1,8 +1,18 @@
 
 import getWeatherIcon from './getWeatherIcon';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-export default function CurrentWeather({id, minTemp, maxTemp, humidity, pressure, desc, unit}) {
+export default function CurrentWeather({currentWeatherData, unit, convertTemp}) {
+    const currWeather = currentWeatherData.weather[0];
+    const currMain = currentWeatherData.main;
+
+    const id = currWeather.id;
+    const desc = currWeather.description;
+    const minTemp = convertTemp(currMain.temp_min);
+    const maxTemp = convertTemp(currMain.temp_max);
+    const humidity = currMain.humidity;
+    const pressure = currMain.pressure;
+
     return <div>
         <div className="flex justify-center">
             <img className="max-w-70 max-h-auto" src={ getWeatherIcon(id)} alt={desc} />
@@ -21,13 +31,13 @@ export default function CurrentWeather({id, minTemp, maxTemp, humidity, pressure
     </div>
 }
 
-CurrentWeather.propTypes = {
-    id: PropTypes.number.isRequired,
-    minTemp: PropTypes.number.isRequired,
-    maxTemp: PropTypes.number.isRequired,
-    humidity: PropTypes.number.isRequired,
-    pressure: PropTypes.number.isRequired,
-    desc: PropTypes.string.isRequired,
-    unit: PropTypes.string.isRequired,
-};
+// CurrentWeather.propTypes = {
+//     id: PropTypes.number.isRequired,
+//     minTemp: PropTypes.number.isRequired,
+//     maxTemp: PropTypes.number.isRequired,
+//     humidity: PropTypes.number.isRequired,
+//     pressure: PropTypes.number.isRequired,
+//     desc: PropTypes.string.isRequired,
+//     unit: PropTypes.string.isRequired,
+// };
   

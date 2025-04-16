@@ -3,33 +3,58 @@ import CurrentWeather from './components/CurrentWeather';
 import UpcomingWeather from './components/UpcomingWeather';
 import { convertToCelsius, convertToFahrenheit } from './components/convertToCelsius';
 import Search from "./components/Search";
-import { fetchCurrentWeather, fetchForecastWeather } from './components/fetchWeather';
+import { fetchCurrentWeather, /*fetchForecastWeather*/ } from './components/fetchWeather';
+
 
 export default function App() {
-  const [city, setCity] = useState('');
-  const [currentWeather, setCurrentWeather] = useState(null);
+  // const [city, setCity] = useState('');
+  const [currentWeatherData, setCurrentWeatherData] = useState(null);
+  const [backgroundColor, setBackgroundColor] = useState()
   const [forecastData, setForecastData] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [unit, setUnit] = useState('C'); // 'C' or 'F'
 
   const handleSearch = async (cityName) => {
-    setCity(cityName);
+    // setCity(cityName);
     setError('');
     setLoading(true);
     
     try {
       // Fetch current weather data
       const currentData = await fetchCurrentWeather(cityName);
-      setCurrentWeather(currentData);
+      setCurrentWeatherData(currentData);
+      console.log(currentWeatherData);
       
-      // Fetch forecast data
-      const forecastData = await fetchForecastWeather(cityName);
-      setForecastData(forecastData.list || []);
+      // // Fetch forecast data
+      // const forecastData = await fetchForecastWeather(cityName);
+      // setForecastData(forecastData.list || []);
+      // console.log(forecastData);
+
+      // Get weather main state (for changign background color)
+      const weatherState = currentWeatherData.weather[0].main;
+      console.log(weatherState);
+      switch(weatherState.toLowerCase()) {
+        case "clouds":
+          setBackgroundColor("#A2B6C7");
+          break;
+        case "clear":
+          setBackgroundColor("#2490F9");
+          break;
+        case "sun":
+          setBackgroundColor("#A2B9BF");
+          break;
+        case "rain": default:
+          setBackgroundColor("#8AC6EA");
+          break;
+      }
+
+      console.log(backgroundColor);
+
     } catch (err) {
       console.error("Error in weather fetching:", err);
       setError(err.message);
-      setCurrentWeather(null);
+      setCurrentWeatherData(null);
       setForecastData([]);
     } finally {
       setLoading(false);
@@ -45,15 +70,16 @@ export default function App() {
   };
 
   return (
-    <div className="bg-blue-300 min-h-screen">
+    <div className={`bg-[${backgroundColor}] min-h-screen`}>
       <Search onSearch={handleSearch} />
       
-      {city && <p className="text-center text-xl mt-4">Selected City: {city}</p>}
+      {/* {city && <p className="text-center text-xl mt-4">Selected City: {city}</p>} */}
 
       <div className="flex justify-center mt-4">
         <button
           onClick={toggleUnit}
           className="bg-[#5879c7] text-white px-4 py-2 rounded"
+          type="submit"
         >
           Show °{unit === 'C' ? 'F' : 'C'}
         </button>
@@ -62,15 +88,11 @@ export default function App() {
       {loading && <p className="text-center mt-4 text-xl">Loading...</p>}
       {error && <p className="text-center text-red-600 mt-4">Error: {error}</p>}
 
-      {currentWeather && currentWeather.weather && currentWeather.main && (
+      {currentWeatherData && currentWeatherData.weather && currentWeatherData.main && (
         <div className="mt-8">
           <CurrentWeather
-            id={currentWeather.weather[0].id}
-            desc={currentWeather.weather[0].description}
-            minTemp={convertTemp(currentWeather.main.temp_min)}
-            maxTemp={convertTemp(currentWeather.main.temp_max)}
-            humidity={currentWeather.main.humidity}
-            pressure={currentWeather.main.pressure}
+            currentWeatherData={currentWeatherData}
+            convertTemp={convertTemp}
             unit={unit}
           />
         </div>
@@ -79,7 +101,8 @@ export default function App() {
       {forecastData.length > 0 && (
         <UpcomingWeather 
           weatherData={forecastData} 
-          unit={unit} 
+          unit={unit}
+          convertTemp={convertTemp}
         />
       )}
     </div>

@@ -2,18 +2,19 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
+
 export default function Search({ onSearch = () => {} }) {
-  const [search, setSearch] = useState('');
+  const [query, setQuery] = useState('');
 
   const handleClick = () => {
-    if (search.trim() === '') return;
-    onSearch(search);
-    setSearch('');
+    if (query.trim() === '') return;
+    onSearch(query);
+    setQuery('');
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter' && search.trim()) {
-      onSearch(search);
+    if (event.key === 'Enter' && query.trim()) {
+      onSearch(query);
     }
   };
 
@@ -24,8 +25,8 @@ export default function Search({ onSearch = () => {} }) {
           className="focus:outline-none ml-5 p-2 text-[#ccdbf1] cursor-text  search-input"
           type="text"
           placeholder="Type a city name..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
         />
       </div>

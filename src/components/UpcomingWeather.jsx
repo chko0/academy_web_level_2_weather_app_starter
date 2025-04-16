@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import Upcomings from "./Upcomings";
 import { convertToCelsius, convertToFahrenheit } from './convertToCelsius';
 
-export default function UpcomingWeather({ weatherData, unit }) {
+
+export default function UpcomingWeather({ weatherData, unit, convertTemp }) {
+
   // Filter data to get one forecast per day
   const getFilteredForecastData = () => {
     if (!Array.isArray(weatherData) || weatherData.length === 0) {
@@ -32,9 +34,9 @@ export default function UpcomingWeather({ weatherData, unit }) {
 
   const filteredData = getFilteredForecastData();
 
-  const convertTemp = (kelvin) => {
-    return unit === 'C' ? convertToCelsius(kelvin) : convertToFahrenheit(kelvin);
-  };
+  // const convertTemp = (kelvin) => {
+  //   return unit === 'C' ? convertToCelsius(kelvin) : convertToFahrenheit(kelvin);
+  // };
 
   // Format the date to be more user-friendly
   const formatDate = (dateString) => {
@@ -61,12 +63,12 @@ export default function UpcomingWeather({ weatherData, unit }) {
   );
 }
 
-UpcomingWeather.propTypes = {
-  weatherData: PropTypes.array,
-  unit: PropTypes.string.isRequired,
-};
+// UpcomingWeather.propTypes = {
+//   weatherData: PropTypes.array,
+//   unit: PropTypes.string.isRequired,
+// };
 
-UpcomingWeather.defaultProps = {
-  weatherData: [],
-  unit: 'C',
-};
+// UpcomingWeather.defaultProps = {
+//   weatherData: [],
+//   unit: 'C',
+// };
