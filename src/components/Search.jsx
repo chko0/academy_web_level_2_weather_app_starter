@@ -3,18 +3,18 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 
-export default function Search({ onSearch = () => {} }) {
+export default function Search({ handleSearch = () => {} }) {
   const [query, setQuery] = useState('');
 
   const handleClick = () => {
     if (query.trim() === '') return;
-    onSearch(query);
-    setQuery('');
+    handleSearch(query);
+    // setQuery('');
   };
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && query.trim()) {
-      onSearch(query);
+      handleSearch(query);
     }
   };
 

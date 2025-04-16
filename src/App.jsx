@@ -32,7 +32,7 @@ export default function App() {
       // console.log(forecastData);
 
       // Get weather main state (for changign background color)
-      const weatherState = currentWeatherData.weather[0].main;
+      const weatherState = currentData.weather[0].main;
       console.log(weatherState);
       switch(weatherState.toLowerCase()) {
         case "clouds":
@@ -71,7 +71,7 @@ export default function App() {
 
   return (
     <div className={`bg-[${backgroundColor}] min-h-screen`}>
-      <Search onSearch={handleSearch} />
+      <Search handleSearch={handleSearch} />
       
       {/* {city && <p className="text-center text-xl mt-4">Selected City: {city}</p>} */}
 
