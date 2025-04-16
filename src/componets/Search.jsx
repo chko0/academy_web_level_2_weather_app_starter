@@ -5,7 +5,7 @@ import { fetchCurrentWeather } from '../components/fetchWeather';
 //import PropTypes from 'prop-types';
 
 export default function Search({setWeatherData}) {
-  const [query, setQuery] = useState("London");
+  const [query, setQuery] = useState("");
   const [searchButtonClicked, setSearchButtonClicked] = useState(false);
 
 
@@ -20,11 +20,11 @@ export default function Search({setWeatherData}) {
   //   onSearch(query);
   // };
 
-  // const handleKeyDown = (event) => {
-  //   if (event.key === 'Enter' && query.trim()) {
-  //     onSearch(query);
-  //   }
-  // };
+  const handleKeyDown = (event) => {
+     if (event.key === 'Enter') {
+      setSearchButtonClicked(true);
+     }
+   };
 
   return (
     <header className="flex flex-row bg-[#759eda] p-4">
@@ -35,7 +35,7 @@ export default function Search({setWeatherData}) {
           placeholder="Type a city name..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          // onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <div className="text-center flex items-center justify-center w-md">
@@ -44,7 +44,7 @@ export default function Search({setWeatherData}) {
           type="button"
           onClick={() => setSearchButtonClicked(true)}
         >
-          Find Weather
+          FIND WEATHER
         </button>
       </div>
     </header>

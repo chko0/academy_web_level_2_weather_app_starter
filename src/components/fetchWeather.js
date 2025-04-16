@@ -1,5 +1,5 @@
 const API_KEY = "0f8a028284d5c98e589dcfa417d5fdd0";
-const URL = `https://api.openweathermap.org/data/2.5/weather`;
+const URL = `https://api.openweathermap.org/data/2.5/forecast`;
 
 // if (!API_KEY) {
 //   console.error(
@@ -11,6 +11,7 @@ const URL = `https://api.openweathermap.org/data/2.5/weather`;
 export async function fetchCurrentWeather(city, setWeatherData) {
   try {
     const res = await fetch(`${URL}?q=${city}&appid=${API_KEY}`);
+    console.log(`${URL}?q=${city}&appid=${API_KEY}`);
     // if (!res.ok) {
     //   throw new Error('Weather data not found or API error');
     // }
@@ -19,6 +20,7 @@ export async function fetchCurrentWeather(city, setWeatherData) {
     setWeatherData(data);
   } catch (error) {
     console.error('Error fetching weather data:', error);
+    setWeatherData(null);
     throw error;
   }
 }

@@ -4,12 +4,10 @@ import CurrentWeather from './components/CurrentWeather'
 import UpcomingWeather from './components/UpcomingWeather'
 import convertToCelsius from './components/convertToCelsius'
 import Search from "./componets/Search";  
-import FakeWeather from "./data/FakeWeather.json";
+
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
-
-
 
   return (
     <div className=" bg-blue-300 min-h-screen">
@@ -17,19 +15,27 @@ function App() {
         <Search setWeatherData={setWeatherData} />
       </header>
 
-      {weatherData && weatherData.weather && weatherData.main ? (
+      {weatherData && weatherData.list ? (
         <>
           <CurrentWeather
-            id={weatherData.weather[0].id}
-            desc={weatherData.weather[0].description}
-            minTemp={convertToCelsius(weatherData.main.temp_min)}
-            maxTemp={convertToCelsius(weatherData.main.temp_max)}
-            humidity={weatherData.main.humidity}
-            pressure={weatherData.main.pressure}
+            id={weatherData.list[0].weather[0].id}
+            desc={weatherData.list[0].weather[0].description}
+            minTemp={convertToCelsius(weatherData.list[0].main.temp_min)}
+            maxTemp={convertToCelsius(weatherData.list[0].main.temp_max)}
+            humidity={weatherData.list[0].main.humidity}
+            pressure={weatherData.list[0].main.pressure}
           />
-          <UpcomingWeather />
+          <UpcomingWeather weatherData={weatherData} />
         </>)
-      : (<></>)}
+      : (
+        <div className="text-center mt-4">
+          {weatherData && weatherData.cod === '404' ? (
+            <p className="text-red-500 size-20">{weatherData.message}</p>
+          ) : (
+            <></>
+          )}
+        </div>
+      )}
     </div>
   );
 }
