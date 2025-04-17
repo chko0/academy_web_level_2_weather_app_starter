@@ -1,40 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CurrentWeather from './components/CurrentWeather';
 import UpcomingWeather from './components/UpcomingWeather';
 import { convertToCelsius, convertToFahrenheit } from './components/convertToCelsius';
 import Search from "./components/Search";
-import { fetchCurrentWeather, /*fetchForecastWeather*/ } from './components/fetchWeather';
+// import { fetchCurrentWeather, /*fetchForecastWeather*/ } from './components/fetchWeather';
 
 
 export default function App() {
   // const [city, setCity] = useState('');
-  const [currentWeatherData, setCurrentWeatherData] = useState(null);
-  const [backgroundColor, setBackgroundColor] = useState()
-  const [forecastData, setForecastData] = useState([]);
-  const [error, setError] = useState('');
+  const [weatherData, setWeatherData] = useState(null);
+  const [backgroundColor, setBackgroundColor] = useState("#8AC6EA");
+  // const [forecastData, setForecastData] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [unit, setUnit] = useState('C'); // 'C' or 'F'
 
-  const handleSearch = async (cityName) => {
-    // setCity(cityName);
-    setError('');
-    setLoading(true);
-    
-    try {
-      // Fetch current weather data
-      const currentData = await fetchCurrentWeather(cityName);
-      setCurrentWeatherData(currentData);
-      console.log(currentWeatherData);
-      
-      // // Fetch forecast data
-      // const forecastData = await fetchForecastWeather(cityName);
-      // setForecastData(forecastData.list || []);
-      // console.log(forecastData);
 
-      // Get weather main state (for changign background color)
-      const weatherState = currentData.weather[0].main;
-      console.log(weatherState);
-      switch(weatherState.toLowerCase()) {
+  useEffect(() => {
+    if (!weatherData) return;
+
+    if (weatherData?.list?.[0]?.weather?.[0]?.main) {
+      const weatherState = weatherData.list[0].weather[0].main;
+      console.log("Weather state: " + weatherState);
+      switch (weatherState.toLowerCase()) {
         case "clouds":
           setBackgroundColor("#A2B6C7");
           break;
@@ -44,22 +32,18 @@ export default function App() {
         case "sun":
           setBackgroundColor("#A2B9BF");
           break;
-        case "rain": default:
+        case "rain":
+        default:
           setBackgroundColor("#8AC6EA");
           break;
       }
-
-      console.log(backgroundColor);
-
-    } catch (err) {
-      console.error("Error in weather fetching:", err);
-      setError(err.message);
-      setCurrentWeatherData(null);
-      setForecastData([]);
-    } finally {
-      setLoading(false);
+      console.log("Background Color:", backgroundColor);
+    } else {
+      console.log("Weather data or its structure is not yet available.");
+      setBackgroundColor("#8AC6EA");
     }
-  };
+  }, [weatherData]);
+
 
   const toggleUnit = () => {
     setUnit(unit === 'C' ? 'F' : 'C');
@@ -70,9 +54,9 @@ export default function App() {
   };
 
   return (
-    <div className={`bg-[${backgroundColor}] min-h-screen`}>
-      <Search handleSearch={handleSearch} />
-      
+    <div className={`min-h-screen transition-color duration-2000 bg-[${backgroundColor}]`}>
+      <Search setWeatherData={setWeatherData} setLoading={setLoading} setError={setErrorMessage} />
+
       {/* {city && <p className="text-center text-xl mt-4">Selected City: {city}</p>} */}
 
       <div className="flex justify-center mt-4">
@@ -86,25 +70,22 @@ export default function App() {
       </div>
 
       {loading && <p className="text-center mt-4 text-xl">Loading...</p>}
-      {error && <p className="text-center text-red-600 mt-4">Error: {error}</p>}
+      {errorMessage && <p className="text-center text-red-600 mt-4">Error: {errorMessage}</p>}
 
-      {currentWeatherData && currentWeatherData.weather && currentWeatherData.main && (
+      {weatherData ? (
         <div className="mt-8">
           <CurrentWeather
-            currentWeatherData={currentWeatherData}
-            convertTemp={convertTemp}
+            currentWeatherData={weatherData}
             unit={unit}
+            convertTemp={convertTemp}
+          />
+          <UpcomingWeather
+            weatherData={weatherData}
+            unit={unit}
+            convertTemp={convertTemp}
           />
         </div>
-      )}
-
-      {forecastData.length > 0 && (
-        <UpcomingWeather 
-          weatherData={forecastData} 
-          unit={unit}
-          convertTemp={convertTemp}
-        />
-      )}
+      ) : (<></>)}
     </div>
   );
 }

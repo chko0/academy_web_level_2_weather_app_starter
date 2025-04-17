@@ -1,21 +1,21 @@
 // UpcomingWeather.jsx
 import PropTypes from "prop-types";
 import Upcomings from "./Upcomings";
-import { convertToCelsius, convertToFahrenheit } from './convertToCelsius';
+// import { convertToCelsius, convertToFahrenheit } from './convertToCelsius';
 
 
 export default function UpcomingWeather({ weatherData, unit, convertTemp }) {
 
   // Filter data to get one forecast per day
   const getFilteredForecastData = () => {
-    if (!Array.isArray(weatherData) || weatherData.length === 0) {
+    if (!Array.isArray(weatherData.list) || weatherData.list.length === 0) {
       return [];
     }
 
     const dailyForecasts = [];
     const dateSet = new Set();
 
-    weatherData.forEach(item => {
+    weatherData.list.forEach(item => {
       if (!item.dt_txt) return;
       
       // Get the date part only (without time)
@@ -63,10 +63,10 @@ export default function UpcomingWeather({ weatherData, unit, convertTemp }) {
   );
 }
 
-// UpcomingWeather.propTypes = {
-//   weatherData: PropTypes.array,
-//   unit: PropTypes.string.isRequired,
-// };
+UpcomingWeather.propTypes = {
+  weatherData: PropTypes.array,
+  unit: PropTypes.string.isRequired,
+};
 
 // UpcomingWeather.defaultProps = {
 //   weatherData: [],

@@ -1,20 +1,56 @@
 // Search.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { fetchCurrentWeather, /*fetchForecastWeather*/ } from './fetchWeather';
 
 
-export default function Search({ handleSearch = () => {} }) {
+export default function Search({ setLoading, setError, setWeatherData }) {
   const [query, setQuery] = useState('');
+  const [searchButtonPressed, setSearchButtonPressed] = useState(false);
 
-  const handleClick = () => {
-    if (query.trim() === '') return;
-    handleSearch(query);
-    // setQuery('');
-  };
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (!query) return;
+
+      // setCity(cityName);
+      setError('');
+      setLoading(true);
+
+      try {
+        // Fetch current weather data
+        const currentData = await fetchCurrentWeather(query);
+        setWeatherData(currentData);
+
+        // // Fetch forecast data
+        // const forecastData = await fetchForecastWeather(cityName);
+        // setForecastData(forecastData.list || []);
+        // console.log(forecastData);
+      } catch (err) {
+        console.error("Error in weather fetching:", err);
+        setError(err.message);
+        setWeatherData(null);
+        // setForecastData([]);
+      } finally {
+        setLoading(false);
+        // setSearchButtonPressed(false);
+      }
+    };
+
+    handleSearch();
+  }, [searchButtonPressed]);
+
+
+
+  // const handleClick = () => {
+  //   if (query.trim() === '') return;
+  //   handleSearch(query);
+  //   // setQuery('');
+  // };
+
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && query.trim()) {
-      handleSearch(query);
+      setSearchButtonPressed(!searchButtonPressed);
     }
   };
 
@@ -34,9 +70,9 @@ export default function Search({ handleSearch = () => {} }) {
         <button
           className="bg-[#5879c7] text-[#0a0d53] p-2 focus:outline-none cursor-pointer  search-button"
           type="button"
-          onClick={handleClick}
+          onClick={() => setSearchButtonPressed(!searchButtonPressed)}
         >
-          Find Weather
+          FIND WEATHER
         </button>
       </div>
     </header>
