@@ -1,7 +1,7 @@
 // Search.jsx
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { fetchCurrentWeather, /*fetchForecastWeather*/ } from './fetchWeather';
+import { fetchCurrentWeather, /*fetchForecastWeather*/ } from './fetchCurrentWeather';
 
 
 export default function Search({ setLoading, setError, setWeatherData }) {
