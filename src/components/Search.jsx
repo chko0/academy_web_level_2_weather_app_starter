@@ -10,9 +10,14 @@ export default function Search({ setLoading, setError, setWeatherData }) {
 
   useEffect(() => {
     const handleSearch = async () => {
-      if (!query) return;
+      if (!searchButtonPressed) return;
+      if (!query.trim()) {
+        setLoading(false);
+        setError('Please enter a city name.');
+        setWeatherData(null);
+        return;
+      }
 
-      // setCity(cityName);
       setError('');
       setLoading(true);
 
@@ -20,37 +25,22 @@ export default function Search({ setLoading, setError, setWeatherData }) {
         // Fetch current weather data
         const currentData = await fetchCurrentWeather(query);
         setWeatherData(currentData);
-
-        // // Fetch forecast data
-        // const forecastData = await fetchForecastWeather(cityName);
-        // setForecastData(forecastData.list || []);
-        // console.log(forecastData);
       } catch (err) {
         console.error("Error in weather fetching:", err);
         setError(err.message);
         setWeatherData(null);
-        // setForecastData([]);
       } finally {
         setLoading(false);
-        // setSearchButtonPressed(false);
+        setSearchButtonPressed(false);
       }
     };
 
     handleSearch();
-  }, [searchButtonPressed]);
-
-
-
-  // const handleClick = () => {
-  //   if (query.trim() === '') return;
-  //   handleSearch(query);
-  //   // setQuery('');
-  // };
-
+  }, [searchButtonPressed, setError, setLoading, setWeatherData, query]);
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && query.trim()) {
-      setSearchButtonPressed(!searchButtonPressed);
+      setSearchButtonPressed(true);
     }
   };
 
@@ -66,20 +56,20 @@ export default function Search({ setLoading, setError, setWeatherData }) {
           onKeyDown={handleKeyDown}
         />
       </div>
-      <div className="text-center flex items-center justify-center w-md">
-        <button
-          className="bg-[#5879c7] text-[#0a0d53] p-2 focus:outline-none cursor-pointer  search-button"
-          type="button"
-          onClick={() => setSearchButtonPressed(!searchButtonPressed)}
-        >
-          FIND WEATHER
-        </button>
-      </div>
+      <button
+        className="bg-[#5879c7] text-[#0a0d53] p-2 focus:outline-none cursor-pointer  search-button  ml-23"
+        type="button"
+        onClick={() => setSearchButtonPressed(true)}
+      >
+        FIND WEATHER
+      </button>
     </header>
   );
 }
 Search.propTypes = {
-  onSearch: PropTypes.func.isRequired,
+  setLoading: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
+  setWeatherData: PropTypes.func.isRequired,
 };
 
 
